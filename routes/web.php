@@ -18,24 +18,25 @@ Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('ho
 
 Route::get('/dashboard', [App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard.index');
 
-Route::group(['prefix' => 'dashboard','middleware' => 'auth'], function(){
+Route::group(['prefix' => 'dashboard' ,'middleware' => 'auth'], function(){
   Route::get('/index', [App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard.index');
 });
 
-Route::group(['prefix' => 'user','middleware' => 'auth'], function(){
+Route::group(['prefix' => 'user', 'middleware' => 'auth'], function(){
     Route::get('/index', [App\Http\Controllers\UserController::class, 'index'])->name('user.index');
     Route::post('/Store', [App\Http\Controllers\UserController::class, 'store'])->name('user.store');
     Route::delete('/delete/{id}', [App\Http\Controllers\UserController::class, 'delete'])->name('user.delete');
+    Route::post('/update/{id}', [App\Http\Controllers\UserController::class, 'update']);
 });
 
 
-Route::group(['prefix' => 'role','middleware' => 'auth'], function(){
+Route::group(['prefix' => 'role', 'middleware' => 'auth'], function(){
   Route::get('/index', [App\Http\Controllers\RolesController::class, 'index'])->name('role.index');
   Route::post('/Store', [App\Http\Controllers\RolesController::class, 'store'])->name('role.store');
   Route::delete('/delete/{id}', [App\Http\Controllers\RolesController::class, 'delete'])->name('role.delete');
 });
 
-Route::group(['prefix' => 'permission','middleware' => 'auth'], function(){
+Route::group(['prefix' => 'permission', 'middleware' => 'auth'], function(){
   Route::get('/index', [App\Http\Controllers\PermissionController::class, 'index'])->name('permission.index');
   Route::post('/Store', [App\Http\Controllers\PermissionController::class, 'store'])->name('permission.store');
   Route::delete('/delete/{id}', [App\Http\Controllers\PermissionController::class, 'delete'])->name('permission.delete');

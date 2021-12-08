@@ -40,22 +40,27 @@
                                                 <td>{{ $user->email }}</td>
                                                 <td>
                                                     <div class="d-flex justify-content-center">
-                                                    <div>
-                                                        <button type="button"
-                                                            class="btn btn-icon icon-left btn-success mr-3"
-                                                            data-dismiss="modal"><i class="fas fa-eye"></i></button>
-                                                    </div>
-                                                    
-                                                    <div>
-                                                        <form action="{{ route('user.delete', $user->id) }}" method="post">
-                                                            @csrf
-                                                            @method('delete')
-                                                            <button type="submit"
-                                                                class="btn btn-icon icon-left btn-danger mr-3"><i class="fas fa-trash"></i>
+                                                        <div>
+                                                            <!-- Button trigger modal -->
+                                                            <button type="button" class="btn btn-primary btn-md mr-5 user-update"
+                                                                data-toggle="modal" data-target=".bd-update-modal-lg" data-uid="{{$user->id}}">
+                                                                edit
                                                             </button>
-                                                        </form>
+                                                        </div>
+
+                                                        <div>
+
+                                                            <form action="{{ route('user.delete', $user->id) }}"
+                                                                method="post">
+                                                                @csrf
+                                                                @method('delete')
+                                                                <button type="submit"
+                                                                    class="btn btn-icon icon-left btn-danger mr-3"><i
+                                                                        class="fas fa-trash"></i>
+                                                                </button>
+                                                            </form>
+                                                        </div>
                                                     </div>
-                                                </div>
                                                 </td>
                                             </tr>
                                         @endforeach
@@ -140,12 +145,12 @@
                                             <div class="input-group-text">
                                                 <i class="fas fa-address-card"></i>
                                             </div>
-                                            <select class="form-control" name = "role">
+                                            <select class="form-control" name="role">
                                                 <option value="No Role"></option>
                                                 @foreach ($roles as $role)
-                                                <option value = "{{$role->name}}">{{$role->name}}</option>
-                                                @endforeach                                                     
-                                              </select>
+                                                    <option value="{{ $role->name }}">{{ $role->name }}</option>
+                                                @endforeach
+                                            </select>
                                         </div>
                                     </div>
                                 </div>
@@ -189,7 +194,8 @@
                                                     <i class="fas fa-user"></i>
                                                 </div>
                                             </div>
-                                            <input type="password" name="password" class="form-control phone-number" required>
+                                            <input type="password" name="password" class="form-control phone-number"
+                                                required>
 
                                         </div>
                                     </div>
@@ -209,4 +215,94 @@
             </div>
         </div>
     </div>
+
+    </div>
+
+    <!-- Large modal -->
+    <div class="modal fade bd-update-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Add User</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <div class="modal-body">
+                    <form method="POST" id="update" >
+         
+                        @csrf
+                        <div class="card-body">
+                            <div class="row d-flex justify-content-center">
+
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label>First Name</label>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <div class="input-group-text">
+                                                    <i class="fas fa-user"></i>
+                                                </div>
+                                            </div>
+                                            <input type="text" name="firstName" class="form-control phone-number" required>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label>Last Name</label>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <div class="input-group-text">
+                                                    <i class="fas fa-user"></i>
+                                                </div>
+                                            </div>
+                                            <input type="text" name="lastName" class="form-control phone-number" required>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="modal-footer text-right">
+                                    <div class="container d-flex justify-content-center">
+                                        <button type="submit" class="btn btn-icon icon-left btn-primary mr-3"><i
+                                                class="far fa-save"></i> Save</button>
+                                        <button type="button" class="btn btn-icon icon-left btn-danger mr-3"
+                                            data-dismiss="modal"><i class="fas fa-ban"></i>Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+    <script>
+        $( document ).ready(function() {
+            $('.user-update').each(function() {
+                $(this).click(function(event) {
+                    console.log($(this).data('uid'));
+                    $('#update').attr("action", "/user/update/" + $(this).data('uid')+"");
+                });
+            });
+        });
+    </script>
+
+    
+
+    
+
+
+
+
+
 @endsection
