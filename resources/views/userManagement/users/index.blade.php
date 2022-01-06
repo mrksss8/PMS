@@ -43,8 +43,16 @@
                                                         <div>
                                                             <!-- Button trigger modal -->
                                                             <button type="button" class="btn btn-primary btn-md mr-5 user-update"
-                                                                data-toggle="modal" data-target=".bd-update-modal-lg" data-uid="{{$user->id}}">
-                                                                edit
+                                                                data-toggle="modal" data-target=".bd-update-modal-lg" 
+                                                                data-uid="{{$user->id}}"
+                                                                data-fn="{{$user->firstName}}"
+                                                                data-ln="{{$user->lastName}}"
+                                                                data-com="{{$user->company}}"
+                                                                data-role="{{$user->role}}"
+                                                                data-ea="{{$user->email}}"
+                                                                data-un="{{$user->name}}">
+                                                               
+                                                                edit 
                                                             </button>
                                                         </div>
 
@@ -225,7 +233,7 @@
             <div class="modal-content">
 
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">Add User</h5>
+                    <h5 class="modal-title" id="exampleModalLongTitle">Edit User</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -247,7 +255,7 @@
                                                     <i class="fas fa-user"></i>
                                                 </div>
                                             </div>
-                                            <input type="text" name="firstName" class="form-control phone-number" required>
+                                            <input type="text" name="firstName" class="form-control phone-number">
 
                                         </div>
                                     </div>
@@ -262,7 +270,68 @@
                                                     <i class="fas fa-user"></i>
                                                 </div>
                                             </div>
-                                            <input type="text" name="lastName" class="form-control phone-number" required>
+                                            <input type="text" name="lastName" class="form-control phone-number">
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label>Company</label>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <div class="input-group-text">
+                                                    <i class="fas fa-user"></i>
+                                                </div>
+                                            </div>
+                                            <input type="text" name="company" class="form-control phone-number">
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label>Role</label>
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <i class="fas fa-address-card"></i>
+                                            </div>
+                                            <select class="form-control" name="role">
+                                                @foreach ($roles as $role)
+                                                    <option value="{{ $role->name }}">{{ $role->name }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label>Email Address</label>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <div class="input-group-text">
+                                                    <i class="fas fa-user"></i>
+                                                </div>
+                                            </div>
+                                            <input type="text" name="email" class="form-control phone-number">
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label>Username</label>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <div class="input-group-text">
+                                                    <i class="fas fa-user"></i>
+                                                </div>
+                                            </div>
+                                            <input type="text" name="name" class="form-control phone-number">
 
                                         </div>
                                     </div>
@@ -290,12 +359,20 @@
         $( document ).ready(function() {
             $('.user-update').each(function() {
                 $(this).click(function(event) {
-                    console.log($(this).data('uid'));
                     $('#update').attr("action", "/user/update/" + $(this).data('uid')+"");
+                    $('input[name="firstName"]').val($(this).data('fn'));
+                    $('input[name="lastName"]').val($(this).data('ln'));
+                    $('input[name="company"]').val($(this).data('com'));
+                    $('input[name="role"]').val($(this).data('role'));
+                    $('input[name="email"]').val($(this).data('ea'));
+                    $('input[name="name"]').val($(this).data('un'));
+                   
                 });
             });
         });
     </script>
+
+
 
     
 
